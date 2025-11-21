@@ -48,8 +48,8 @@ use_package("dplyr")
 # use_git()
 
 # Use Github
-# create_github_token()
-# gitcreds_set()
+create_github_token()
+gitcreds_set()
 
 # use_github()
 
@@ -98,10 +98,18 @@ shapefile_path <- system.file(
 load_shape(shapefile_path)
 
 
+## harmonise_crs()
 
+use_r("harmonise_crs")
+# Remember to put in the roxygen skeleton
+document()
 
+load_all()
 
-
+# Let's make a file with the wrong CRS to use.
+data_to_break <- sf::read_sf("inst/extdata/test_data.shp", quiet = TRUE)
+wrong_crs_data <- sf::st_set_crs(data_to_break, 4326)
+st_write(wrong_crs_data, "inst/extdata/wrong_crs_data.shp", append = FALSE)
 
 
 
